@@ -1,6 +1,7 @@
 package com.telse.authtest.validation2;
 
 import android.content.res.Resources;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,6 +31,11 @@ public class PasswordValidator extends TextValidator implements View.OnFocusChan
 
         matcherPassword = patternPassword.matcher(value);
         matcherDouble = patternDouble.matcher(value);
+
+        if (TextUtils.isEmpty(textView.getText())){
+            textView.setError("This field is required");
+            return false;
+        }
 
         if (passwordLength > value.length()) {
             textView.setError("This field is too short");

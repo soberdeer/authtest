@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.telse.authtest.validation2.ValidatorFactory;
+import com.telse.authtest.validation2.PasswordValidator;
+import com.telse.authtest.validation2.UsernameValidator;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -25,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        View view = findViewById(R.id.activity_login);
         _emailText = (EditText) findViewById(R.id.input_email);
         _passwordText = (EditText) findViewById(R.id.input_password);
         _loginButton = (Button) findViewById(R.id.btn_login);
@@ -38,16 +39,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        new ValidatorFactory<>().setUpValidators(view);
+        _emailText.addTextChangedListener(new UsernameValidator(_emailText));
+        _emailText.setOnFocusChangeListener(new UsernameValidator(_emailText));
+        _passwordText.addTextChangedListener(new PasswordValidator(_passwordText));
+        _passwordText.setOnFocusChangeListener(new PasswordValidator(_passwordText));
     }
 
     public void login() {
         Log.d(TAG, "Login");
 
-//        if (!validate()) {
-//            onLoginFailed();
-//            return;
-//        }
+        if (!(validate(_emailText) || validate(_passwordText))) {
+            onLoginFailed();
+            return;
+        }
 
         _loginButton.setEnabled(false);
 
@@ -95,16 +99,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), R.string.error_invalid_email, Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), R.string.error_login, Toast.LENGTH_LONG).show();
 
         _loginButton.setEnabled(true);
     }
 
 
-
     private void startMainActivity() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+    }
+
+    private boolean validate(TextView textView) {
+        if (textView.getHint() == null) return false;
+        return true;
+
     }
 
 }

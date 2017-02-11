@@ -28,6 +28,11 @@ public class UsernameValidator extends TextValidator implements View.OnFocusChan
         m = p.matcher(value);
         check = m.matches();
 
+        if (TextUtils.isEmpty(textView.getText())){
+            textView.setError("This field is required");
+            return false;
+        }
+
         if (usernameLength >value.length()){
             textView.setError("This field is too short");
             return false;
