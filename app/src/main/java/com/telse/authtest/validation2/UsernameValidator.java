@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 public class UsernameValidator extends TextValidator implements View.OnFocusChangeListener {
 
     private static final String PATTERN_USERNAME = "^[^\\s\\.]*$";
+    private static final int usernameLength = 4;
 
     public UsernameValidator(TextView textView) {
         super(textView);
@@ -27,11 +28,15 @@ public class UsernameValidator extends TextValidator implements View.OnFocusChan
         m = p.matcher(value);
         check = m.matches();
 
+        if (usernameLength >value.length()){
+            textView.setError("This field is too short");
+            return false;
+        }
+
         if (!check) {
-            textView.setError((textView.getHint() + " is invalid!"));
+            textView.setError("Username should not contain dots or whitespaces");
         } else {
             textView.setError(null);
-
         }
         return check;
     }

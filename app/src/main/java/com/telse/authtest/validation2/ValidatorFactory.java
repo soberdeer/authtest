@@ -1,5 +1,6 @@
 package com.telse.authtest.validation2;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -21,18 +22,16 @@ public class ValidatorFactory<T extends View> {
         for (View possibleTextView : possibleTextViews) {
             if (possibleTextView instanceof EditText) {
                 EditText textView = (EditText) possibleTextView;
-                textView.addTextChangedListener(new RequiredValidator(textView));
 
                 if (textView.equals(view.findViewById(R.id.input_email))) {
                     textView.addTextChangedListener(new UsernameValidator(textView));
-                    textView.addTextChangedListener(new LengthValidator(textView, 4));
                     textView.setOnFocusChangeListener(new UsernameValidator(textView));
-                } else {
+                } else if (textView.equals(view.findViewById(R.id.input_password))) {
                     textView.addTextChangedListener(new PasswordValidator(textView));
-                    textView.addTextChangedListener(new LengthValidator(textView, 6));
                     textView.setOnFocusChangeListener(new PasswordValidator(textView));
                 }
             }
         }
     }
+
 }
