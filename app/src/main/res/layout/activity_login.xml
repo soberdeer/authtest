@@ -9,9 +9,10 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
+        android:paddingTop="@dimen/padding_top"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
+
 
         <ImageView android:src="@drawable/ic_logo"
             android:layout_width="wrap_content"
@@ -24,12 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_email"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="@dimen/edittext_horizontal_margin"
+            android:layout_marginRight="@dimen/edittext_horizontal_margin">
+            <EditText android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Email" />
+                android:hint="Username" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -37,7 +40,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="@dimen/edittext_horizontal_margin"
+            android:layout_marginRight="@dimen/edittext_horizontal_margin">
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,7 +57,9 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Login"/>
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:text="@string/login"/>
 
     </LinearLayout>
 </ScrollView>

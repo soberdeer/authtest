@@ -12,23 +12,51 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.telse.authtest.validation2.PasswordValidator;
-import com.telse.authtest.validation2.UsernameValidator;
+import com.telse.authtest.db.SQLiteHelper;
+import com.telse.authtest.encryption.KeystoreEncrypt;
+import com.telse.authtest.validator.PasswordValidator;
+import com.telse.authtest.validator.UsernameValidator;
+
+import static com.telse.authtest.MainActivity.KEY_PASSWORD;
+import static com.telse.authtest.MainActivity.KEY_USER;
 
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
-    EditText _emailText, _passwordText;
+    EditText _usernameText, _passwordText;
     Button _loginButton;
+    Bundle extras;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        _emailText = (EditText) findViewById(R.id.input_email);
+        _usernameText = (EditText) findViewById(R.id.input_username);
         _passwordText = (EditText) findViewById(R.id.input_password);
+
+
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            String username = extras.getString(KEY_USER);
+            String password = extras.getString(KEY_PASSWORD);
+            _usernameText.setText(username);
+            _passwordText.setText(password);
+            _usernameText.setKeyListener(null);
+            _passwordText.setKeyListener(null);
+            Toast.makeText(getBaseContext(), R.string.error_change_log, Toast.LENGTH_LONG).show();
+        } else {
+            _usernameText.addTextChangedListener(new UsernameValidator(_usernameText));
+            _usernameText.setOnFocusChangeListener(new UsernameValidator(_usernameText));
+            _passwordText.addTextChangedListener(new PasswordValidator(_passwordText));
+            _passwordText.setOnFocusChangeListener(new PasswordValidator(_passwordText));
+            _usernameText.setText("");
+            _passwordText.setText("");
+
+        }
+
+
         _loginButton = (Button) findViewById(R.id.btn_login);
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
@@ -38,17 +66,12 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-
-        _emailText.addTextChangedListener(new UsernameValidator(_emailText));
-        _emailText.setOnFocusChangeListener(new UsernameValidator(_emailText));
-        _passwordText.addTextChangedListener(new PasswordValidator(_passwordText));
-        _passwordText.setOnFocusChangeListener(new PasswordValidator(_passwordText));
     }
 
     public void login() {
         Log.d(TAG, "Login");
 
-        if (!(validate(_emailText) || validate(_passwordText))) {
+        if (!(validate(_usernameText) || validate(_passwordText))) {
             onLoginFailed();
             return;
         }
@@ -60,10 +83,15 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
+        if (extras == null) {
+            String username = _usernameText.getText().toString();
+            String password = _passwordText.getText().toString();
+            Intent intent = new Intent();
+            intent.putExtra(KEY_USER, username);
+            intent.putExtra(KEY_PASSWORD, password);
+            setResult(RESULT_OK, intent);
+        }
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -73,19 +101,22 @@ public class LoginActivity extends AppCompatActivity {
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 300);
+
+
+        finish();
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-
-            startMainActivity();
+            //  startMainActivity();
             this.finish();
 
         }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -104,17 +135,11 @@ public class LoginActivity extends AppCompatActivity {
         _loginButton.setEnabled(true);
     }
 
-
-    private void startMainActivity() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-    }
-
     private boolean validate(TextView textView) {
-        if (textView.getHint() == null) return false;
+        if (textView.getError() != null) return false;
         return true;
-
     }
+
 
 }
 

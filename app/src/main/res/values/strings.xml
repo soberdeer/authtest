@@ -10,11 +10,18 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-
+    <string name="error_change_log">There is already logged in user</string>
     <string name="error_login">Please check all field</string>
     <string name="error_too_short">This field is too short</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="s">Field is Required</string>
+    <string name="successful_drop">Username and password successfully dropped</string>
+    <string name="drop_login">Drop login</string>
+    <string name="to_login_screen">To login screen</string>
+    <string name="login">Login</string>
+    <string name="exit">Close app</string>
+    <string name="welcome">Welcome back</string>
+
+    <string name="drop_after_five_mins">Username and password dropped after 5 minutes, sorry</string>
 </resources>

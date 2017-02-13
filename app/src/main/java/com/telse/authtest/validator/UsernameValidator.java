@@ -1,4 +1,4 @@
-package com.telse.authtest.validation2;
+package com.telse.authtest.validator;
 
 import android.text.TextUtils;
 import android.view.View;

@@ -1,11 +1,8 @@
-package com.telse.authtest.validation2;
+package com.telse.authtest.validator;
 
-import android.content.res.Resources;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-
-import com.telse.authtest.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
