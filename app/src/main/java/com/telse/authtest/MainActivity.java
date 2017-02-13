@@ -80,11 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    public void login() {
-        loginActivity();
-    }
-
     public void loginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, LOGIN_RESULT_CODE);
@@ -115,10 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void exit() {
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -134,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent alarmIntent = new Intent(this, AlarmReceiver.class);
                 pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
                 alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                int interval = (int) TimeUnit.SECONDS.toMillis(1);
+                int interval = (int) TimeUnit.MINUTES.toMillis(5);
                 alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
 
             }
