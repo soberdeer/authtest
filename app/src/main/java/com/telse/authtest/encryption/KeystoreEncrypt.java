@@ -31,13 +31,11 @@ public class KeystoreEncrypt implements KeyEncryptable {
     private KeyStore keyStore;
     Context context;
 
-
     @Override
     public void createNewKeys(String alias) {
         try {
             keyStore = KeyStore.getInstance("AndroidKeyStore");
             keyStore.load(null);
-            // Create new key if needed
             if (!keyStore.containsAlias(alias)) {
                 Calendar start = Calendar.getInstance();
                 Calendar end = Calendar.getInstance();

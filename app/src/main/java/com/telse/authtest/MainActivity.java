@@ -4,9 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +20,6 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String TAG = "SimpleKeystoreApp";
-    static final String CIPHER_TYPE = "RSA/ECB/PKCS1Padding";
-    static final String CIPHER_PROVIDER = "AndroidOpenSSL";
     static final String KEY_USER = "auth_test_user";
     static final String KEY_PASSWORD = "auth_test_password";
     private static final int LOGIN_RESULT_CODE = 0;
@@ -86,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void login(){
+    public void login() {
         loginActivity();
     }
 

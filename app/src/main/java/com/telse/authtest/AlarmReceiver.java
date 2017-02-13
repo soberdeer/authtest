@@ -9,9 +9,6 @@ import com.telse.authtest.db.SQLiteHelper;
 import com.telse.authtest.encryption.KeystoreEncrypt;
 
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableEntryException;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -35,8 +32,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         keystoreEncrypt.refreshKeys();
         db.getWritableDatabase();
         db.deleteAccount();
-//        deleteKey(KEY_USER);
-//        deleteKey(KEY_PASSWORD);
         db.close();
         Toast.makeText(context, R.string.drop_after_five_mins, Toast.LENGTH_LONG).show();
         Intent i = new Intent(context, MainActivity.class);
@@ -44,22 +39,4 @@ public class AlarmReceiver extends BroadcastReceiver {
         context.startActivity(i);
     }
 
-    private void deleteKey(String alias) {
-        try {
-            keyStore = KeyStore.getInstance("AuthTest");
-            keyStore.load(null);
-        } catch (Exception e) {
-        }
-        try {
-            if (keyStore.getEntry(alias, null) != null) {
-                keystoreEncrypt.deleteKey(alias);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnrecoverableEntryException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        }
-    }
 }
